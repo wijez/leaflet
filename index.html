@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaflet Image Overlay</title>
+  
+  <!-- Bao gồm các tệp CSS và JS của Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    #map {
+      height: 600px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="map"></div>
+  
+  <script>
+    var map = L.map('map').setView([16.13179278679867, 108.05109018035064], 15); // Tạo bản đồ Leaflet và thiết lập tọa độ và mức zoom mặc định
+
+    var imageUrl = 'namyencanhquan.png', // Đường dẫn đến ảnh của bạn
+      imageBounds = [[-90, -180], [90, 180]]; // Tọa độ của góc trên cùng bên trái và góc dưới cùng bên phải của ảnh
+
+    L.imageOverlay(imageUrl, imageBounds).addTo(map); // Thêm hình ảnh làm overlay vào bản đồ
+
+    map.setMaxBounds(imageBounds); // Thiết lập giới hạn hiển thị bản đồ
+
+    // Thêm bản đồ OpenStreetMap làm lớp nền (tùy chọn)
+  
+    var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    });
+
+    Esri_WorldImagery.addTo(map)
+    /* var Stadia_AlidadeSatellite = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.{ext}', {
+      minZoom: 0,
+      maxZoom: 20,
+      attribution: '&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver (Contains Copernicus Data) | &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      ext: 'jpg'
+    });
+    */
+
+    // Stadia_AlidadeSatellite.addTo(map)
+
+    
+    // google streets
+
+    googleStreets = L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}',{
+      maxZoom: 20,
+      subdomains:['mt0','mt1','mt2','mt3']
+  });
+   // googleStreets.addTo(map)
+
+  googleHybrid = L.tileLayer('http://{s}.google.com/vt?lyrs=s,h&x={x}&y={y}&z={z}',{
+  maxZoom: 20,
+  subdomains:['mt0','mt1','mt2','mt3']
+  });
+  // googleHybrid.addTo(map)
+
+  googleSat = L.tileLayer('http://{s}.google.com/vt?lyrs=s&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+  });
+  
+  //googleSat.addTo(map);
+
+  var BrightIcon = L.icon({
+    iconUrl: 'images/cautreo.png',
+
+    iconSize: [40, 40]
+  });
+  var Marker2 = L.marker([16.13179278679867, 108.05109018035064], {icon: BrightIcon});
+  var popup = Marker2.bindPopup('this is marker 1').openPopup();
+  popup.addTo(map);
+
+  
+  </script>
+  
+</body>
+
+</html>
